@@ -60,9 +60,16 @@ pipeline {
         stage('Package & Docker Build') {
             steps {
                 echo 'Création du JAR exécutable et de l\'image Docker...'
-                
                 sh 'mvn package -DskipTests'
                 sh 'docker build -t epsi/bad-practices-app:latest .'
+            }
+        }
+
+        stage('Docker Verify') {
+            steps {
+                echo 'Vérification que le conteneur démarre correctement...'
+                sh 'docker run --rm --name test-container epsi/bad-practices-app:latest'
+                echo 'Conteneur démarré et terminé avec succès.'
             }
         }
     }
