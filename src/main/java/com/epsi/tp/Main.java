@@ -9,8 +9,11 @@ public class Main {
     public static void main(String[] args) {
         LOGGER.info("Démarrage de l'application...");
 
+        String user = System.getenv("APP_USER");
+        String password = System.getenv("APP_PASSWORD");
+
         UserService userService = new UserService();
-        userService.login("admin", "password123");
-        userService.getUserDetails("john_doe");
+        userService.login(user, password);
+        userService.getUserDetails(user);
     }
 }

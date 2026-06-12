@@ -3,3 +3,4 @@ generated-test-sources/
 maven-status/
 site/
 surefire-reports/
+.env
