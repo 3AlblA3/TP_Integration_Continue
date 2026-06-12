@@ -4,16 +4,17 @@ import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.util.logging.Level;
 import java.util.logging.Logger;
 
 public class UserService {
 
     private static final Logger LOGGER = Logger.getLogger(UserService.class.getName());
 
-    private String DB_PASSWORD = System.getenv("DB_PASSWORD");
+    private String dbPassword = System.getenv("DB_PASSWORD");
 
     public void login(String username, String password) {
-        LOGGER.info("Tentative de connexion de l'utilisateur : " + username);
+        LOGGER.log(Level.INFO, "Tentative de connexion de l'utilisateur : {0}", username);
 
         String adminUser = System.getenv("ADMIN_USER");
         String adminPass = System.getenv("ADMIN_PASS");
@@ -26,17 +27,17 @@ public class UserService {
     }
 
     public void getUserDetails(String username) {
-        String query = "SELECT * FROM users WHERE username = ?";
-        try (Connection conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/mydb", "root", DB_PASSWORD);
+        String query = "SELECT username FROM users WHERE username = ?";
+        try (Connection conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/mydb", "root", dbPassword);
              PreparedStatement pstmt = conn.prepareStatement(query)) {
             pstmt.setString(1, username);
             try (ResultSet rs = pstmt.executeQuery()) {
                 while (rs.next()) {
-                    LOGGER.info("Utilisateur trouvé : " + rs.getString("username"));
+                    LOGGER.log(Level.INFO, "Utilisateur trouvé : {0}", rs.getString("username"));
                 }
             }
         } catch (Exception e) {
-            LOGGER.severe("Erreur lors de la récupération de l'utilisateur : " + e.getMessage());
+            LOGGER.log(Level.SEVERE, "Erreur lors de la récupération de l'utilisateur : {0}", e.getMessage());
         }
     }
 
