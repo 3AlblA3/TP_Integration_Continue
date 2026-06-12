@@ -28,11 +28,12 @@ public class UserService {
     public void getUserDetails(String username) {
         String query = "SELECT * FROM users WHERE username = ?";
         try (Connection conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/mydb", "root", DB_PASSWORD);
-             PreparedStatement pstmt = conn.prepareStatement(query);
-             ResultSet rs = pstmt.executeQuery()) {
+             PreparedStatement pstmt = conn.prepareStatement(query)) {
             pstmt.setString(1, username);
-            while (rs.next()) {
-                LOGGER.info("Utilisateur trouvé : " + rs.getString("username"));
+            try (ResultSet rs = pstmt.executeQuery()) {
+                while (rs.next()) {
+                    LOGGER.info("Utilisateur trouvé : " + rs.getString("username"));
+                }
             }
         } catch (Exception e) {
             LOGGER.severe("Erreur lors de la récupération de l'utilisateur : " + e.getMessage());
