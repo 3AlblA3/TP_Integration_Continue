@@ -14,7 +14,7 @@ public class UserService {
     private String dbPassword = System.getenv("DB_PASSWORD");
 
     public void login(String username, String password) {
-        LOGGER.log(Level.INFO, "Tentative de connexion de l'utilisateur : {0}", username);
+        LOGGER.log(Level.INFO, "Tentative de connexion de l''utilisateur : {0}", username);
 
         String adminUser = System.getenv("ADMIN_USER");
         String adminPass = System.getenv("ADMIN_PASS");
@@ -37,7 +37,7 @@ public class UserService {
                 }
             }
         } catch (Exception e) {
-            LOGGER.log(Level.SEVERE, "Erreur lors de la récupération de l'utilisateur : {0}", e.getMessage());
+            LOGGER.log(Level.SEVERE, "Erreur lors de la récupération de l''utilisateur : {0}", e.getMessage());
         }
     }
 
