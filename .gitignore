@@ -1,0 +1,5 @@
+generated-sources/
+generated-test-sources/
+maven-status/
+site/
+surefire-reports/
